@@ -1,8 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import { DATABASE } from './config.js';
+import authRoutes from './routes/auth.route.js';
 
 const app = express();
 
@@ -18,11 +19,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-app.get('/api', (req, res) => {
-    res.json({
-        data: 'Hello from NodeJS API'
-    });
-});
+// routes middlewares
+app.use('/api/v1', authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on the port ${PORT}`);
